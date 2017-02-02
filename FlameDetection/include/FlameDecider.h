@@ -26,7 +26,7 @@ private:
 #endif
     
     Mat mFrame;
-    CvSVM mSVM;
+    Ptr<SVM> mSVM = SVM::create();
     
 #ifdef TRAIN_MODE
     bool mSampleEnough;

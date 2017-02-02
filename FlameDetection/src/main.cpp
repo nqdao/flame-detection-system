@@ -18,7 +18,7 @@ VideoHandler* videoHandler = NULL;
 
 int main(int argc, const char* argv[])
 {
-    VideoHandler handler("clips/6.avi");
+    VideoHandler handler(argv[1]);
     videoHandler = &handler;
     
     int ret = handler.handle();

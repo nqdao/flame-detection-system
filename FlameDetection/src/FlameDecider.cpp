@@ -46,7 +46,7 @@ FlameDecider::FlameDecider()
 #else
 FlameDecider::FlameDecider()
 {
-    mSVM.load(SVM_DATA_FILE.c_str());
+    mSVM->load(SVM_DATA_FILE.c_str());
 }
 #endif
 
@@ -67,7 +67,7 @@ void FlameDecider::userInput(const map<int, Target>& targets)
         bool flag = true;
         
         while (true) {
-            int key = waitKey(200);
+            int key = waitKey(100);
             switch (key) {
                 case -1:    // no key pressed
                     rectangle(temp, rect, flag ? Scalar(0, 0, 255) : Scalar(0, 255, 0));
@@ -132,13 +132,13 @@ void FlameDecider::svmStudy()
         label.at<float>(i, 0) = mResultVec[i] ? 1.0 : 0.0;
 	}
     
-	CvSVMParams params;
-    params.svm_type = CvSVM::C_SVC;
-    params.kernel_type = CvSVM::LINEAR;
-    params.term_crit = cvTermCriteria(CV_TERMCRIT_ITER, 100, 1e-6);
-    
-    mSVM.train(data, label, Mat(), Mat(), params);
-	mSVM.save(SVM_DATA_FILE.c_str());
+
+    mSVM->setType(SVM::C_SVC);
+    mSVM->setKernel(SVM::LINEAR);
+    mSVM->setTermCriteria(TermCriteria(TermCriteria::MAX_ITER, 100, 1e-6));
+    Ptr<TrainData> tData = TrainData::create(data, SampleTypes::ROW_SAMPLE, label);
+    mSVM->train(tData);
+	mSVM->save(SVM_DATA_FILE.c_str());
 }
 
 void FlameDecider::train(const map<int, Target>& targets)
@@ -155,7 +155,7 @@ void FlameDecider::train(const map<int, Target>& targets)
 #else
 inline bool FlameDecider::svmPredict(const Feature& feature)
 {
-    float result = mSVM.predict(Mat(feature));
+    float result = mSVM->predict(Mat(feature));
     cout << "result: " << result << endl;
 	return result == 1.0;
 }

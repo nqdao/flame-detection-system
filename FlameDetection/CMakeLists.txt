@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 2.8)
+project ( FlameDetection )
+find_package( OpenCV REQUIRED )
+include_directories(include)
+file(GLOB SOURCES "src/*.cpp")
+add_executable( FlameDetection ${SOURCES} )
+set(CMAKE_CXX_FLAGS "-std=c++11")
+target_link_libraries( FlameDetection ${OpenCV_LIBS} )

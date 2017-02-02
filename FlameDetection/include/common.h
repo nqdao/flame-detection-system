@@ -27,6 +27,7 @@
 
 using namespace std;
 using namespace cv;
+using namespace cv::ml;
 
 //#define OLD_ALGO
 #define TRAIN_MODE

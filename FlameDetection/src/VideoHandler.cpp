@@ -54,7 +54,8 @@ int VideoHandler::handle()
         moveWindow("original", 10, 120);
         imshow("original", mFrame);
 
-        if (mSaveVideo && !saveVideo()) {
+        //if (mSaveVideo && !saveVideo()) {
+        if (mSaveVideo) {
             cout << "Save video failed." << endl;
             mSaveVideo = false;
         }
@@ -64,7 +65,8 @@ int VideoHandler::handle()
                 if (mSaveKeyFrame && !saveFrame()) {
                     cout << "Save key frame failed." << endl;
                 }
-                if (mSaveVideo) {
+                //if (mSaveVideo) {
+                if(false) {
                     continueToDetect = false;
                     continue;
                 }

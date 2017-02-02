@@ -73,7 +73,7 @@ void Region::merge(const Region& r)
 
 TargetExtractor::TargetExtractor()
 {
-    mMOG.set("detectShadows", false);
+    mMOG->setDetectShadows(false);
 }
 
 #ifdef OLD_ALGO
@@ -184,8 +184,8 @@ void TargetExtractor::regionGrow2(int areaThreshold, int diffThreshold)
 
 void TargetExtractor::movementDetect(double learningRate)
 {
-    mMOG(mFrame, mMask, learningRate);
-    mMOG.getBackgroundImage(mBackground);
+    mMOG->apply(mFrame, mMask, learningRate);
+    mMOG->getBackgroundImage(mBackground);
 }
 
 void TargetExtractor::colorDetect(int redThreshold, double saturationThreshold)
